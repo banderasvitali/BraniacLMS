@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from datetime import datetime
 
+from mainapp.models import News
+
 
 class ContactsView(TemplateView):
     template_name = 'mainapp/contacts.html'
@@ -52,28 +54,6 @@ class NewsView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['object_list'] = [
-            {
-                'title': 'Новость 1',
-                'preview': 'Предварительное описание новости',
-                'date': datetime.now()
-            },{
-                'title': 'Новость 2',
-                'preview': 'Предварительное описание новости',
-                'date': datetime.now()
-            },{
-                'title': 'Новость 3',
-                'preview': 'Предварительное описание новости',
-                'date': datetime.now()
-            },{
-                'title': 'Новость 4',
-                'preview': 'Предварительное описание новости',
-                'date': datetime.now()
-            },{
-                'title': 'Новость 5',
-                'preview': 'Предварительное описание новости',
-                'date': datetime.now()
-            },
-        ]
+        context_data['object_list'] = News.objects.filter(deleted=False)
         return context_data
         
